@@ -32,22 +32,28 @@ namespace Palexen.Gameplay.UI
         #region VARIABLES
 
         [MyHeader("Settings")]
-        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)] public Slider _baseSlider;
-        [FieldColor(FieldPropertyColor.pink)] public Image[] _graphicElements;
+        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)][SerializeField] private Slider _baseSlider;
+        [FieldColor(FieldPropertyColor.pink)][SerializeField] private Image[] _graphicElements;
 
         int totalSettings;
         int currentSettings;
-        public Color _inactive = Color.white;
-        public Color _active = Color.white;
+        [SerializeField] private Color _inactive = Color.white;
+        [SerializeField] private Color _active = Color.white;
 
         [MyHeader("Text Settings")]
-        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)] public TextMeshProUGUI _titleText;
-        public string[] _titles;
+        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)][SerializeField] private TextMeshProUGUI _titleText;
+        [SerializeField] private string[] _titles;
 
         [MyHeader("Save System")]
-        public AllowBasicSaveSystem _allowSaveSystem;
-        public string _basicKey = "Assembly_Basics_SSB_";
-        public int _defaultValue;
+        [SerializeField] private AllowBasicSaveSystem _allowSaveSystem;
+        [SerializeField] private string _basicKey = "Assembly_Basics_SSB_";
+        [SerializeField] private int _defaultValue;
+
+        #endregion
+
+        #region PROPERTIES
+
+        public AllowBasicSaveSystem AllowSaveSystem { get => _allowSaveSystem; set => _allowSaveSystem = value; }
 
         #endregion
 

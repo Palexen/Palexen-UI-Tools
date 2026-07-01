@@ -36,32 +36,32 @@ namespace Palexen.Gameplay.UI
         #region VARIABLES
 
         [MyHeader("Hold and Action")]
-        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)] public AudioClip _confirmedAction;
-        [FieldColor(FieldPropertyColor.cyan, ShowObjectMessage.errorMessage)] public Image _fillImage;
-        public float _fillTime = .5f;
+        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)][SerializeField] private AudioClip _confirmedAction;
+        [FieldColor(FieldPropertyColor.cyan, ShowObjectMessage.errorMessage)][SerializeField] private Image _fillImage;
+        [SerializeField] private float _fillTime = .5f;
         float timer;
-        public UnityEvent _onHoldComplete;
+        [SerializeField] private UnityEvent _onHoldComplete;
         bool isHolding;
         [SerializeField] private bool _hasClockFeatures;
 
         [MyHeader("Audio SFX")]
-        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)] public AudioClip _click;
-        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)] public AudioClip _navigate;
+        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)][SerializeField] private AudioClip _click;
+        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)][SerializeField] private AudioClip _navigate;
         [SerializeField] private bool _hasAudioFeatures;
 
         [MyHeader("Resize Settings")]
-        public ResizeMethod _resizeMethod;
-        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)] public RectTransform _rectTransform;
-        [VectorSlider(.5f, 1.5f)]public Vector2 _resizeRange = new(.5f, 1.2f);
-        public float _resizeSpeed = 2;
+        [SerializeField] private ResizeMethod _resizeMethod;
+        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)][SerializeField] private RectTransform _rectTransform;
+        [VectorSlider(.5f, 1.5f)][SerializeField] private Vector2 _resizeRange = new(.5f, 1.2f);
+        [SerializeField] private float _resizeSpeed = 2;
         float currentSize = 1;
         bool isResized;
         [SerializeField] private bool _hasResizeFeatures;
 
         [MyHeader("Text Settings")]
-        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)] public TextMeshProUGUI _text;
-        public Color _normalColor = Color.white;
-        public Color _activeColor = Color.white;
+        [FieldColor(FieldPropertyColor.pink, ShowObjectMessage.errorMessage)][SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private Color _normalColor = Color.white;
+        [SerializeField] private Color _activeColor = Color.white;
         [SerializeField] private bool _hasTextFeatures;
 
         #endregion

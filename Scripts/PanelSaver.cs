@@ -31,14 +31,23 @@ namespace Palexen.Gameplay.UI
     {
         #region VARIABLES
 
-        [FieldColor(FieldPropertyColor.cyan, ShowObjectMessage.message)] public GameObject _UIItem;
+        [FieldColor(FieldPropertyColor.cyan, ShowObjectMessage.message)][SerializeField] private GameObject _UIItem;
         GameObject _currentUI;
-        public string _joyStickName;
+        [SerializeField] private string _joyStickName;
         bool hasControllerConected;
         float currentTime;
         float maxTime = 1;
 
         #endregion
+
+        #region PROPERTIES
+
+        public string JoyStickName { get { return _joyStickName; } }
+        public bool HasControllerConected { get { return hasControllerConected; } }
+
+        #endregion
+
+        #region UNITY METHODS
 
         private void OnEnable()
         {
@@ -56,7 +65,10 @@ namespace Palexen.Gameplay.UI
 
         private void OnDisable()
         {
-            EventSystem.current.SetSelectedGameObject(null);
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
         }
 
         private void Update()
@@ -64,7 +76,9 @@ namespace Palexen.Gameplay.UI
             ValidateInput();
         }
 
-        #region METHODS
+        #endregion
+
+        #region MECHANICS
 
         void ValidateInput()
         {

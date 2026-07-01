@@ -20,17 +20,27 @@
 */
 using UnityEngine;
 using Palexen.Tools;
+using System;
 
 namespace Palexen.Gameplay.UI
 {
     [AddComponentMenu("Palexen/UI/Loading Bar")]
     [ScriptDescription("Loading Bar", "Manage Loading bar")]
+    [RequireComponent(typeof(Animator))]
     public class LoadingBar : MonoBehaviour
     {
         #region VARIABLES
 
         public static LoadingBar instance;
-        Animator _animator;
+        private Animator _animator;
+        private static readonly int IsLoadingHash = Animator.StringToHash("isLoading");
+        bool _isLoading = false;
+
+        #endregion
+
+        #region PROPERTIES
+
+        public bool IsLoading { get { return _isLoading; } set { _isLoading = value; _animator.SetBool(IsLoadingHash, value); } }
 
         #endregion
 
@@ -49,18 +59,25 @@ namespace Palexen.Gameplay.UI
             }
         }
 
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
         #endregion
 
         #region API
 
+        [Obsolete("Use IsLoading property instead.")]
         public void PlayLoadingBar()
         {
-            _animator.SetBool("isLoading", true);
+            _animator.SetBool(IsLoadingHash, true);
         }
 
+        [Obsolete("Use IsLoading property instead.")]
         public void StopLoadingBar()
         {
-            _animator.SetBool("isLoading", false);
+            _animator.SetBool(IsLoadingHash, false);
         }
 
         #endregion

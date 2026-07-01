@@ -19,6 +19,9 @@
 * -----------------------------------------------------------------------------
 */
 using UnityEngine;
+using Palexen.Scriptables;
+using Palexen.Audio;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -26,11 +29,19 @@ using Palexen.Tools;
 
 namespace Palexen.Gameplay.UI
 {
+    #region ENUMS
+
     public enum ResizeMethod { moveTowards, lerp }
     public enum AllowBasicSaveSystem { no, yes }
 
+    #endregion
+
 #if UNITY_EDITOR
+
+    #region UI BASE ELEMENT BEHAVIOUR
+
     [CustomEditor(typeof(UIElementBehaviour))]
+    [CanEditMultipleObjects]
     public class GameplayUI : Editor
     {
         #region CLOCK VARIABLES
@@ -83,6 +94,8 @@ namespace Palexen.Gameplay.UI
 
         private void OnEnable()
         {
+            UIElementBehaviour uie = (UIElementBehaviour)target;
+
             ClockPorperties();
             AudioProperties();
             ResizeProperties();
@@ -124,7 +137,7 @@ namespace Palexen.Gameplay.UI
 
         public override void OnInspectorGUI()
         {
-            UIElementBehaviour uie = (UIElementBehaviour)target;
+
             serializedObject.Update();
 
             if (EditorGUIUtility.isProSkin)
@@ -294,5 +307,155 @@ namespace Palexen.Gameplay.UI
             EditorGUILayout.PropertyField(activeColor);
         }
     }
+
+    #endregion
+
+    #region LOADING BAR
+
+    [CustomEditor(typeof(LoadingBar))]
+    public class LoadingBarEditor : Editor
+    {
+        LoadingBar lb;
+
+        private void OnEnable()
+        {
+            lb = (LoadingBar)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            string path = "Environment Settings/Palexen Environment Settings";
+            CustomEnvironment setting = Resources.Load<CustomEnvironment>(path);
+
+            GUILayout.Label($"<color={"#" + setting.scriptTitleColor.ConvertToHex()}>Loading Bar</color>",
+                PalexenEditorStyles.CoolTitle(setting.scriptTitleSize));
+
+            GUILayout.Box("Play a loading bar for your UI", PalexenEditorStyles.CoolBox(12, TextAnchor.MiddleCenter, FontStyle.BoldAndItalic));
+        }
+    }
+
+    #endregion
+
+    #region PANEL SAVER
+
+    [CustomEditor(typeof(PanelSaver))]
+    public class PanelSaverEditor : Editor
+    {
+        PanelSaver ps;
+        SerializedProperty _UIItem;
+        SerializedProperty _joyStickName;
+
+        private void OnEnable()
+        {
+            ps = (PanelSaver)target;
+            _UIItem = serializedObject.FindProperty("_UIItem");
+            _joyStickName = serializedObject.FindProperty("_joyStickName");
+        }
+
+        public override void OnInspectorGUI()
+        {
+            string path = "Environment Settings/Palexen Environment Settings";
+            CustomEnvironment setting = Resources.Load<CustomEnvironment>(path);
+            GUILayout.Label($"<color={"#" + setting.scriptTitleColor.ConvertToHex()}>Panel Saver</color>",
+                PalexenEditorStyles.CoolTitle(setting.scriptTitleSize));
+            GUILayout.Box("Restore the UI Interaction if it disappear", PalexenEditorStyles.CoolBox(12, TextAnchor.MiddleCenter, FontStyle.BoldAndItalic));
+
+            serializedObject.Update();
+
+            EditorGUILayout.PropertyField(_UIItem);
+            EditorGUILayout.PropertyField(_joyStickName);
+
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+
+    #endregion
+
+    #region UI LIST 
+
+    [CustomEditor(typeof(UIListSetting))]
+    [CanEditMultipleObjects]
+    public class UIListSettingEditor : Editor
+    {
+        UIListSetting uils;
+        SerializedProperty _baseSlider;
+        SerializedProperty _graphicElements;
+        SerializedProperty _inactive;
+        SerializedProperty _active;
+        SerializedProperty _titleText;
+        SerializedProperty _titles;
+        SerializedProperty _allowSaveSystem;
+        SerializedProperty _basicKey;
+        SerializedProperty _defaultValue;
+
+        private void OnEnable()
+        {
+            uils = (UIListSetting)target;
+            _baseSlider = serializedObject.FindProperty("_baseSlider");
+            _graphicElements = serializedObject.FindProperty("_graphicElements");
+            _inactive = serializedObject.FindProperty("_inactive");
+            _active = serializedObject.FindProperty("_active");
+            _titleText = serializedObject.FindProperty("_titleText");
+            _titles = serializedObject.FindProperty("_titles");
+            _allowSaveSystem = serializedObject.FindProperty("_allowSaveSystem");
+            _basicKey = serializedObject.FindProperty("_basicKey");
+            _defaultValue = serializedObject.FindProperty("_defaultValue");
+        }
+        public override void OnInspectorGUI()
+        {
+            string path = "Environment Settings/Palexen Environment Settings";
+            CustomEnvironment setting = Resources.Load<CustomEnvironment>(path);
+            GUILayout.Label($"<color={"#" + setting.scriptTitleColor.ConvertToHex()}>UI List Setting</color>",
+                PalexenEditorStyles.CoolTitle(setting.scriptTitleSize));
+            GUILayout.Box("Controls a list and selects a setting", PalexenEditorStyles.CoolBox(12, TextAnchor.MiddleCenter, FontStyle.BoldAndItalic));
+
+            serializedObject.Update();
+            EditorGUILayout.PropertyField(_baseSlider);
+            EditorGUILayout.PropertyField(_graphicElements);
+            EditorGUILayout.PropertyField(_inactive);
+            EditorGUILayout.PropertyField(_active);
+            EditorGUILayout.PropertyField(_titleText);
+            EditorGUILayout.PropertyField(_titles);
+            EditorGUILayout.PropertyField(_allowSaveSystem);
+
+            if(uils.AllowSaveSystem == AllowBasicSaveSystem.yes)
+            {
+                EditorGUILayout.HelpBox("The key will be used to save the current setting in PlayerPrefs. " +
+                    "Make sure to use a unique key for each UI List Setting.", MessageType.Info);
+                EditorGUILayout.PropertyField(_basicKey);
+                EditorGUILayout.PropertyField(_defaultValue);
+            }
+
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+
+    #endregion
+
+    #region UI SFX
+
+    [CustomEditor(typeof(UISfxManager))]
+    public class UISfxManagerEditor : Editor
+    {
+        UISfxManager usm;
+
+        private void OnEnable()
+        {
+            usm = (UISfxManager)target;
+        }
+        public override void OnInspectorGUI()
+        {
+            string path = "Environment Settings/Palexen Environment Settings";
+            CustomEnvironment setting = Resources.Load<CustomEnvironment>(path);
+            GUILayout.Label($"<color={"#" + setting.scriptTitleColor.ConvertToHex()}>UI SFX Manager</color>",
+                PalexenEditorStyles.CoolTitle(setting.scriptTitleSize));
+            GUILayout.Box("Manage UI Sounds", PalexenEditorStyles.CoolBox(12, TextAnchor.MiddleCenter, FontStyle.BoldAndItalic));
+            serializedObject.Update();
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+
+    #endregion
+
 #endif
 }
