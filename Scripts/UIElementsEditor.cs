@@ -33,6 +33,7 @@ namespace Palexen.Gameplay.UI
 
     public enum ResizeMethod { moveTowards, lerp }
     public enum AllowBasicSaveSystem { no, yes }
+    public enum UISFXListener { fromManager, own }
 
     #endregion
 
@@ -44,6 +45,8 @@ namespace Palexen.Gameplay.UI
     [CanEditMultipleObjects]
     public class GameplayUI : Editor
     {
+        UIElementBehaviour uie;
+
         #region CLOCK VARIABLES
 
         SerializedProperty confirmedAction;
@@ -59,6 +62,7 @@ namespace Palexen.Gameplay.UI
 
         #region SOUND VARIABLES
 
+        SerializedProperty _sfxListener;
         SerializedProperty click;
         SerializedProperty navigate;
         SerializedProperty hasAudioFeatures;
@@ -94,7 +98,7 @@ namespace Palexen.Gameplay.UI
 
         private void OnEnable()
         {
-            UIElementBehaviour uie = (UIElementBehaviour)target;
+            uie = (UIElementBehaviour)target;
 
             ClockPorperties();
             AudioProperties();
@@ -113,6 +117,7 @@ namespace Palexen.Gameplay.UI
 
         void AudioProperties()
         {
+            _sfxListener = serializedObject.FindProperty("_sfxListener");
             click = serializedObject.FindProperty("_click");
             navigate = serializedObject.FindProperty("_navigate");
             hasAudioFeatures = serializedObject.FindProperty("_hasAudioFeatures");
@@ -288,8 +293,13 @@ namespace Palexen.Gameplay.UI
 
         void ShowAudioSettings()
         {
-            EditorGUILayout.PropertyField(click);
-            EditorGUILayout.PropertyField(navigate);
+            EditorGUILayout.PropertyField(_sfxListener);
+
+            if (uie.UISFXListener == UISFXListener.own)
+            {
+                EditorGUILayout.PropertyField(click);
+                EditorGUILayout.PropertyField(navigate);
+            }
         }
 
         void ShowResizeSettings()
@@ -438,10 +448,14 @@ namespace Palexen.Gameplay.UI
     public class UISfxManagerEditor : Editor
     {
         UISfxManager usm;
+        SerializedProperty _navigationClip;
+        SerializedProperty _onClickClip;
 
         private void OnEnable()
         {
             usm = (UISfxManager)target;
+            _navigationClip = serializedObject.FindProperty("_navigationClip");
+            _onClickClip = serializedObject.FindProperty("_onClickClip");
         }
         public override void OnInspectorGUI()
         {
@@ -451,6 +465,10 @@ namespace Palexen.Gameplay.UI
                 PalexenEditorStyles.CoolTitle(setting.scriptTitleSize));
             GUILayout.Box("Manage UI Sounds", PalexenEditorStyles.CoolBox(12, TextAnchor.MiddleCenter, FontStyle.BoldAndItalic));
             serializedObject.Update();
+
+            EditorGUILayout.PropertyField(_navigationClip);
+            EditorGUILayout.PropertyField(_onClickClip);
+
             serializedObject.ApplyModifiedProperties();
         }
     }

@@ -45,8 +45,9 @@ namespace Palexen.Gameplay.UI
         [SerializeField] private bool _hasClockFeatures;
 
         [MyHeader("Audio SFX")]
-        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)][SerializeField] private AudioClip _click;
-        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)][SerializeField] private AudioClip _navigate;
+        [SerializeField] private UISFXListener _sfxListener;
+        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.warningMessage)][SerializeField] private AudioClip _click;
+        [FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.warningMessage)][SerializeField] private AudioClip _navigate;
         [SerializeField] private bool _hasAudioFeatures;
 
         [MyHeader("Resize Settings")]
@@ -66,7 +67,30 @@ namespace Palexen.Gameplay.UI
 
         #endregion
 
+        #region PROPERTIES
+
+        public UISFXListener UISFXListener { get { return _sfxListener; } }
+
+        #endregion
+
         #region UNITY METHODS
+
+        void Start()
+        {
+            if(_sfxListener == UISFXListener.fromManager)
+            {
+                if (!UISfxManager.Instance)
+                {
+                    Debug.LogError("No UISFXManager found in the scene. Please add one to use audio features.");
+                    _hasAudioFeatures = false;
+                }
+                else
+                {
+                    _click = UISfxManager.Instance.OnClickClip;
+                    _navigate = UISfxManager.Instance.NavigationClip;
+                }
+            }
+        }
 
         void OnDisable()
         {

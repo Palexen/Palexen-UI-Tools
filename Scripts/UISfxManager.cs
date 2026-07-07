@@ -32,6 +32,15 @@ namespace Palexen.Audio
 
         public static UISfxManager Instance;
         AudioSource source;
+        [SerializeField][FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)] private AudioClip _navigationClip;
+        [SerializeField][FieldColor(FieldPropertyColor.yellow, ShowObjectMessage.errorMessage)] private AudioClip _onClickClip;
+
+        #endregion
+
+        #region PROPERTIES
+
+        public AudioClip NavigationClip { get { return _navigationClip; } }
+        public AudioClip OnClickClip { get { return _onClickClip; } }
 
         #endregion
 
