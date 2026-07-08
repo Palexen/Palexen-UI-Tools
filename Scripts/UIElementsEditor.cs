@@ -475,5 +475,132 @@ namespace Palexen.Gameplay.UI
 
     #endregion
 
+    #region PREFABS CREATOR
+
+    public class UIElementsCreator
+    {
+        [MenuItem("GameObject/Palexen/UI/Button - Basic")]
+        static void CreateButtonBasic()
+        {
+            GameObject prefabAsset = Resources.Load<GameObject>("UI Prefabs/Button - Basic");
+
+            if (prefabAsset != null)
+            {
+                GameObject clone = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset);
+                clone.GetComponent<RectTransform>().SetParent(Selection.activeTransform);
+                clone.GetComponent<RectTransform>().localScale = Vector3.one;
+                Selection.activeGameObject = clone;
+                EditorGUIUtility.PingObject(clone);
+            }
+            else
+            {
+                Debug.LogError("Can't Find prefab in the <color=yellow>Prefabs/ </color> folder, " +
+                    "create new prefab and put in there, or <color=cyan>Reimport</color> the package");
+            }
+        }
+
+        [MenuItem("GameObject/Palexen/UI/Button - Sprite Swap")]
+        static void CreateButtonSpriteSwap()
+        {
+            GameObject prefabAsset = Resources.Load<GameObject>("UI Prefabs/Button - Sprite Swap");
+
+            if (prefabAsset != null)
+            {
+                GameObject clone = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset);
+                clone.GetComponent<RectTransform>().SetParent(Selection.activeTransform);
+                clone.GetComponent<RectTransform>().localScale = Vector3.one;
+                Selection.activeGameObject = clone;
+                EditorGUIUtility.PingObject(clone);
+            }
+            else
+            {
+                Debug.LogError("Can't Find prefab in the <color=yellow>Prefabs/ </color> folder, " +
+                    "create new prefab and put in there, or <color=cyan>Reimport</color> the package");
+            }
+        }
+
+        [MenuItem("GameObject/Palexen/UI/Button - Swap Hold")]
+        static void CreateButtonSwapHold()
+        {
+            GameObject prefabAsset = Resources.Load<GameObject>("UI Prefabs/Button - Swap Hold");
+
+            if (prefabAsset != null)
+            {
+                GameObject clone = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset);
+                clone.GetComponent<RectTransform>().SetParent(Selection.activeTransform);
+                clone.GetComponent<RectTransform>().localScale = Vector3.one;
+                Selection.activeGameObject = clone;
+                EditorGUIUtility.PingObject(clone);
+            }
+            else
+            {
+                Debug.LogError("Can't Find prefab in the <color=yellow>Prefabs/ </color> folder, " +
+                    "create new prefab and put in there, or <color=cyan>Reimport</color> the package");
+            }
+        }
+
+        [MenuItem("GameObject/Palexen/UI/Main Loading Bar")]
+        static void CreateMainLoadingBar()
+        {
+            GameObject prefabAsset = Resources.Load<GameObject>("UI Prefabs/Loading Bar");
+
+            if (prefabAsset != null)
+            {
+                GameObject clone = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset);
+                clone.GetComponent<RectTransform>().SetParent(Selection.activeTransform);
+                clone.GetComponent<RectTransform>().localScale = Vector3.one;
+                Selection.activeGameObject = clone;
+                EditorGUIUtility.PingObject(clone);
+            }
+            else
+            {
+                Debug.LogError("Can't Find prefab in the <color=yellow>Prefabs/ </color> folder, " +
+                    "create new prefab and put in there, or <color=cyan>Reimport</color> the package");
+            }
+        }
+
+        [MenuItem("GameObject/Palexen/UI/Settings Switch")]
+        static void CreateSettingsSwitch()
+        {
+            GameObject prefabAsset = Resources.Load<GameObject>("UI Prefabs/Settings Switch");
+
+            if (prefabAsset != null)
+            {
+                GameObject clone = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset);
+                clone.GetComponent<RectTransform>().SetParent(Selection.activeTransform);
+                clone.GetComponent<RectTransform>().localScale = Vector3.one;
+                Selection.activeGameObject = clone;
+                EditorGUIUtility.PingObject(clone);
+            }
+            else
+            {
+                Debug.LogError("Can't Find prefab in the <color=yellow>Prefabs/ </color> folder, " +
+                    "create new prefab and put in there, or <color=cyan>Reimport</color> the package");
+            }
+        }
+
+        [MenuItem("GameObject/Palexen/UI/Toggle - Basic")]
+        static void CreateToggleBasic()
+        {
+            GameObject prefabAsset = Resources.Load<GameObject>("UI Prefabs/Toggle - Basic");
+
+            if (prefabAsset != null)
+            {
+                GameObject clone = (GameObject)PrefabUtility.InstantiatePrefab(prefabAsset);
+                clone.GetComponent<RectTransform>().SetParent(Selection.activeTransform);
+                clone.GetComponent<RectTransform>().localScale = Vector3.one;
+                Selection.activeGameObject = clone;
+                EditorGUIUtility.PingObject(clone);
+            }
+            else
+            {
+                Debug.LogError("Can't Find prefab in the <color=yellow>Prefabs/ </color> folder, " +
+                    "create new prefab and put in there, or <color=cyan>Reimport</color> the package");
+            }
+        }
+    }
+
+    #endregion
+
 #endif
 }
